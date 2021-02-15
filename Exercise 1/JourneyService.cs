@@ -19,7 +19,7 @@ namespace Exercise_1
                 properties.JourneyStart,
                 properties.JourneyEnd,
                 properties.AccessOption,
-                properties.JourneyPref
+                properties.JourneyPref 
             );
 
             var response = await _httpClientService.GetRequestAsync(url);
