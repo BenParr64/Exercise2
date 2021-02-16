@@ -1,4 +1,5 @@
 ﻿using Exercise_1.Interfaces;
+using Newtonsoft.Json;
 using System.Threading.Tasks;
 
 namespace Exercise_1
@@ -12,14 +13,15 @@ namespace Exercise_1
             _httpClientService = httpClientService;
         }
 
-        public async Task<string> GetJourney(JourneyRequest properties)
+        public async Task<JourneyResult> GetJourney(JourneyRequest properties)
         {
             var urlBuilder = new UrlBuilder(properties);
             var url = urlBuilder.Build();
 
             var response = await _httpClientService.GetRequestAsync(url);
 
-            return response;
+            var results = JsonConvert.DeserializeObject<JourneyResult>(response);
+            return results;
         }
     }
 }

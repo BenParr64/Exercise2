@@ -1,12 +1,13 @@
-using Exercise_1;
-using Exercise1.UnitTests.Mock;
+﻿using Exercise_1;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Threading.Tasks;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Exercise1.UnitTests
 {
     [TestClass]
-    public class UnitTest1
+    public class Class1
     {
         public JourneyRequest Properties = new JourneyRequest()
         {
@@ -15,30 +16,6 @@ namespace Exercise1.UnitTests
             AccessOption = "NotSpecified",
             JourneyPref = "Fastest"
         };
-
-        public JourneyRequest MissingProperties = new JourneyRequest()
-        {
-            JourneyStart = "",
-            JourneyEnd = "1000160",
-            AccessOption = "NotSpecified",
-            JourneyPref = "Fastest"
-        };
-
-        [TestMethod]
-        public async Task JourneyService_GetJourney_ReturnsStringResponse()
-        {
-            //Arrange
-            var httpClientServiceMock = new HttpClientServiceMock();
-            var sut = new JourneyService(httpClientServiceMock);
-
-            //Act
-            var result = await sut.GetJourney(Properties);
-            var expected = "Mock Response";
-
-            //Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual(result, expected);
-        }
 
         [TestMethod]
         public void UrlBuilder_GetUrl_ReturnsStringUrl()
