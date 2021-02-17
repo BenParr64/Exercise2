@@ -10,14 +10,14 @@ namespace Exercise_1
     class IcsConverter
     {
         public string FileName { get; set; }
-        public List<SearchParameters> Stations;
+        public List<StationIcs> Stations;
         public IcsConverter(string fileName)
         {
             FileName = fileName;
         }
-        public List<SearchParameters> ReadFile()
+        public List<StationIcs> ReadFile()
         {
-            Stations = new List<SearchParameters>();
+            Stations = new List<StationIcs>();
             StreamReader sr = new StreamReader(FileName);
             StringBuilder sb = new StringBuilder();
             string s;
@@ -28,7 +28,7 @@ namespace Exercise_1
                 string str1 = str[0].ToString();
                 if (!str1.Equals("ICS Code"))
                 {
-                    Stations.Add(new SearchParameters(Int32.Parse(str[0]), str[1].ToString()));
+                    Stations.Add(new StationIcs(Int32.Parse(str[0]), str[1].ToString()));
                 }
             }
             return Stations;

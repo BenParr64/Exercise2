@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Exercise_1
 {
     [Serializable]
-    internal class JourneyRequestException : Exception
+    public class JourneyRequestException : Exception
     {
         public JourneyRequestException()
         {
@@ -12,6 +12,11 @@ namespace Exercise_1
 
         public JourneyRequestException(string message) : base(message)
         {
+        }
+
+        public JourneyRequestException(string message, string parameter) : base(message)
+        {
+
         }
 
         public JourneyRequestException(string message, Exception innerException) : base(message, innerException)
