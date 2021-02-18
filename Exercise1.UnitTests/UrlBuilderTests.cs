@@ -25,18 +25,23 @@ namespace Exercise1.UnitTests
             //Act
             var expected =
                 $"https://appsvc-journeyplannermiddleware-test-01.azurewebsites.net/api/Journey/{Properties.JourneyStart}/to/{Properties.JourneyEnd}/?accessOption={Properties.AccessOption}&journeyPreference={Properties.JourneyPref}";
-            
+
             //Assert 
             Assert.AreEqual(expected, result);
         }
 
 
         [TestMethod]
+        [DataRow("100007a")]
+        [DataRow("asdasff")]
+        [DataRow("12dasff")]
+        [DataRow("12d@@ff")]
+        [DataRow("B£N")]
         [ExpectedException(typeof(JourneyRequestException))]
-        public void UrlBuilder_JourneyStartIsNotNumber_ThrowsJourneyRequestException()
+        public void UrlBuilder_JourneyStartIsNotNumber_ThrowsJourneyRequestException(string data)
         {
             //Arrange
-            Properties.JourneyStart = "100007a";
+            Properties.JourneyStart = data;
             var builder = new UrlBuilder(Properties);
 
             //Act => Assert
@@ -44,11 +49,15 @@ namespace Exercise1.UnitTests
         }
 
         [TestMethod]
+        [DataRow("100007a")]
+        [DataRow("10000^%")]
+        [DataRow("gf0007a")]
+        [DataRow("J@CK")]
         [ExpectedException(typeof(JourneyRequestException))]
-        public void UrlBuilder_JourneyEndIsNotNumber_ThrowsJourneyRequestException()
+        public void UrlBuilder_JourneyEndIsNotNumber_ThrowsJourneyRequestException(string data)
         {
             //Arrange
-            Properties.JourneyEnd = "100016a";
+            Properties.JourneyEnd = data;
             var builder = new UrlBuilder(Properties);
 
             //Act => Assert
@@ -56,11 +65,17 @@ namespace Exercise1.UnitTests
         }
 
         [TestMethod]
+        [DataRow("10000777")]
+        [DataRow("10007")]
+        [DataRow("10000777555555")]
+        [DataRow("1235")]
+        [DataRow("1333")]
+        [DataRow("")]
         [ExpectedException(typeof(JourneyRequestException))]
-        public void UrlBuilder_JourneyStartLengthIsNot7_ThrowsJourneyRequestException()
+        public void UrlBuilder_JourneyStartLengthIsNot7_ThrowsJourneyRequestException(string data)
         {
             //Arrange
-            Properties.JourneyStart = "10000777";
+            Properties.JourneyStart = data;
             var builder = new UrlBuilder(Properties);
 
             //Act => Assert
@@ -68,11 +83,17 @@ namespace Exercise1.UnitTests
         }
 
         [TestMethod]
+        [DataRow("10000777")]
+        [DataRow("10007")]
+        [DataRow("10000777555555")]
+        [DataRow("1235")]
+        [DataRow("1333")]
+        [DataRow("")]
         [ExpectedException(typeof(JourneyRequestException))]
-        public void UrlBuilder_JourneyEndLengthIsNot7_ThrowsJourneyRequestException()
+        public void UrlBuilder_JourneyEndLengthIsNot7_ThrowsJourneyRequestException(string data)
         {
             //Arrange
-            Properties.JourneyStart = "10001600";
+            Properties.JourneyStart = data;
             var builder = new UrlBuilder(Properties);
 
             //Act => Assert
@@ -80,11 +101,17 @@ namespace Exercise1.UnitTests
         }
 
         [TestMethod]
+        [DataRow("10000777")]
+        [DataRow("NoTrains")]
+        [DataRow("NoTravelling")]
+        [DataRow("NoTravel")]
+        [DataRow("NoMoving")]
+        [DataRow("BoatsOnly")]
         [ExpectedException(typeof(JourneyRequestException))]
-        public void UrlBuilder_JourneyPrefIsString_ThrowsJourneyRequestException()
-        {
+        public void UrlBuilder_InvalidAccessOptions_ThrowsJourneyRequestException(string data)
+        { 
             //Arrange
-            Properties.JourneyPref = "Fastest";
+            Properties.AccessOption = data;
             var builder = new UrlBuilder(Properties);
 
             //Act => Assert
@@ -92,11 +119,16 @@ namespace Exercise1.UnitTests
         }
 
         [TestMethod]
+        [DataRow("10000777")]
+        [DataRow("Really slow")]
+        [DataRow("PrivateHelicopter")]
+        [DataRow("Most Walking")]
+        [DataRow("GoFast")]
         [ExpectedException(typeof(JourneyRequestException))]
-        public void UrlBuilder_AccessOptionIsString_ThrowsJourneyRequestException()
+        public void UrlBuilder_InvalidJourneyPref_ThrowsJourneyRequestException(string data)
         {
             //Arrange
-            Properties.AccessOption = "NotSpecified";
+            Properties.JourneyPref = data;
             var builder = new UrlBuilder(Properties);
 
             //Act => Assert

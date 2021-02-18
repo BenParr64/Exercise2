@@ -39,9 +39,12 @@ namespace Exercise_1
                 throw new JourneyRequestException("Journey End is not a number");
             if (!ValidateJourneyStartLength())
                 throw new JourneyRequestException($"Journey Start needs to be a length of {journeyLength}");
-            if(!ValidateJourneyEndLength())
+            if (!ValidateJourneyEndLength())
                 throw new JourneyRequestException($"Journey End needs to be a length of {journeyLength}");
-           
+            if (!ValidateAccessOptions())
+                throw new JourneyRequestException($"Invalid Access option selected");
+            if (!ValidateJourneyPreference())
+                throw new JourneyRequestException($"Invalid journey option selected");
         }
 
         public bool ValidateJourneyStartIsNumber()
@@ -65,6 +68,30 @@ namespace Exercise_1
             return Properties.JourneyEnd.Length == journeyLength;
         }
 
-       
+        public bool ValidateAccessOptions()
+        {
+            return
+            (
+                Properties.AccessOption.ToLower() == "NotSpecified".ToLower() ||
+                Properties.AccessOption.ToLower() == "NoSolidStairs".ToLower() ||
+                Properties.AccessOption.ToLower() == "NoEscalators".ToLower() ||
+                Properties.AccessOption.ToLower() == "NoElevators".ToLower() ||
+                Properties.AccessOption.ToLower() == "StepFreeToPlatform".ToLower() ||
+                Properties.AccessOption.ToLower() == "StepFreeToVehicle".ToLower() ||
+                Properties.AccessOption == ""
+            );
+        }
+
+        public bool ValidateJourneyPreference()
+        {
+            return
+            (
+                Properties.JourneyPref.ToLower() == "NotSpecified".ToLower() ||
+                Properties.JourneyPref.ToLower() == "LeastInterchanges".ToLower() ||
+                Properties.JourneyPref.ToLower() == "Fastest".ToLower() ||
+                Properties.JourneyPref.ToLower() == "LeastWalking".ToLower() ||
+                Properties.JourneyPref == ""
+             );
+        }
     }
 }
